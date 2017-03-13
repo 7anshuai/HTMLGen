@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
+    "cover": "istanbul cover _mocha",
     "test": "mocha"
   },
   "author": "Tan Shuai",
   "license": "MIT",
   "description": "HTML Generator",
   "devDependencies": {
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "should": "^11.1.2"
   },
