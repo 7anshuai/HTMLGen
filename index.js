@@ -6,21 +6,20 @@ class HTMLGen {
   constructor() {
     this.title = 'Default title';
 
+    // A trap for getting a property value
+    // like __noSuchMethod__ in firefox
     // like method_missing in ruby
     const handler = {
       get (target, key) {
-        if (Reflect.has(target, key)) {
-          return Reflect.get(target, key);
-        }
-        return function methodMissing(attrhash, content) {
+        return key in target ? target[key] : function methodMissing(attrhash, content) {
           if (typeof attrhash === 'string' || typeof attrhash === 'function') {
             content = content ? content : attrhash;
             attrhash = {};
           }
           if (typeof content === 'string') {
             content = content;
-          } else if (typeof content === 'function'){
-           content = content() && content().toString() ? content().toString() : '';
+          } else if (typeof content === 'function') {
+            content = content() && content().toString() ? content().toString() : '';
           } else {
             content = null;
           }
@@ -46,7 +45,7 @@ class HTMLGen {
       }
     }
 
-    let nl = _.include(this.newlinetags, m) ? '\n' : '';
+    let nl = this.newlinetags.includes(m) ? '\n' : '';
     let attribs = '';
 
     if (Object.keys(attrhash).length != 0) {
