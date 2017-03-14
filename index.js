@@ -92,6 +92,33 @@ class HTMLGen {
   setTitle(t) {
     this.title = t;
   }
+
+  page(content) {
+    return typeof content === 'string' || typeof content === 'function' ?
+      '<!DOCTYPE html>' +
+        this.html(() => {
+          return this.head(() => {
+            return this.meta({charset: 'utf-8'}) +
+              `<title>${this.entities(this.title)}</title>` +
+              this.meta({content: 'width=device-width, initial-scale=1, maximum-scale=1', name: 'viewport'}) +
+              this.meta({content: 'index', name: 'robots'})
+            }) +
+            this.body(() => {
+              return this.div({class: 'container'}, () => {
+                return _header() + this.div({id: 'content'}, typeof content === 'string' ? content : content()) + _footer();
+              })
+            })
+        }) :
+      '';
+  }
+}
+
+function _header() {
+  return typeof applicationHeader === 'function' ? applicationHeader() : '';
+}
+
+function _footer() {
+  return typeof applicationFooter === 'function' ? applicationFooter() : '';
 }
 
 HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split('');

@@ -50,4 +50,9 @@ describe('HTMLGen', () => {
     const ul = h.list();
     ul.should.equal('<ul></ul>');
   });
+
+  it('should gen a default page', () => {
+    const header = h.page('');
+    header.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"></head><body><div class="container"><div id="content"></div></div></body></html>');
+  })
 });
