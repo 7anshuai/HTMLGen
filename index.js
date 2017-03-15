@@ -3,8 +3,11 @@
 const _ = require('underscore');
 
 class HTMLGen {
-  constructor() {
-    this.title = 'Default title';
+  constructor(options={}) {
+
+    this.headtags = options.headtags || '';
+    this.foottags = options.foottags || '';
+    this.title = options.title || 'Default title';
 
     // A trap for getting a property value
     // like __noSuchMethod__ in firefox
@@ -93,6 +96,13 @@ class HTMLGen {
     this.title = t;
   }
 
+  append (content, tag='head') {
+    let tags = tag === 'body' ? 'foottags' : 'headtags';
+    if (typeof content === 'string') return this[tags] = content;
+    if (typeof content === 'function') return this[tags] = content() ? content() : '';
+    this[tags] = this[tags] || '';
+  }
+
   page(content) {
     return typeof content === 'string' || typeof content === 'function' ?
       '<!DOCTYPE html>' +
@@ -101,12 +111,13 @@ class HTMLGen {
             return this.meta({charset: 'utf-8'}) +
               `<title>${this.entities(this.title)}</title>` +
               this.meta({content: 'width=device-width, initial-scale=1, maximum-scale=1', name: 'viewport'}) +
-              this.meta({content: 'index', name: 'robots'})
+              this.meta({content: 'index', name: 'robots'}) +
+              this.headtags || ''
             }) +
             this.body(() => {
               return this.div({class: 'container'}, () => {
                 return _header() + this.div({id: 'content'}, typeof content === 'string' ? content : content()) + _footer();
-              })
+              }) + this.foottags;
             })
         }) :
       '';

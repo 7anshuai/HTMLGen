@@ -3,7 +3,9 @@ const H = require('../index');
 
 describe('HTMLGen', () => {
   // body...
-  const h = new H;
+  const h = new H({
+    headtags: '<link href="/favicon.ico" rel="shortcut icon">'
+  });
   const noop = () => {};
 
   it('get title', () => {
@@ -14,6 +16,16 @@ describe('HTMLGen', () => {
   it('set title', function() {
     h.setTitle('Test');
     h.title.should.equal('Test');
+  });
+
+  it('should get head tags', () => {
+    h.headtags.should.equal('<link href="/favicon.ico" rel="shortcut icon">')
+  });
+
+  it('should append tags to body', () => {
+    h.append(() => {
+      return h.script({src: '//code.jquery.com/jquery.js'}, '');
+    }, 'body');
   });
 
   it('should gen a empty meta tag', () => {
@@ -53,6 +65,6 @@ describe('HTMLGen', () => {
 
   it('should gen a default page', () => {
     const header = h.page('');
-    header.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"></head><body><div class="container"><div id="content"></div></div></body></html>');
+    header.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><div id="content"></div></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
   })
 });
