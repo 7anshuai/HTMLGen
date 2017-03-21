@@ -1,5 +1,5 @@
 {
-  "name": "HTMLGen",
+  "name": "html5-gen",
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "author": "Tan Shuai",
   "license": "MIT",
-  "description": "HTML Generator",
+  "description": "HTML5 Generator",
   "devDependencies": {
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
@@ -22,15 +22,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/7anshuai/HTMLGen.git"
+    "url": "git+https://github.com/7anshuai/html5-gen.git"
   },
   "keywords": [
-    "HTMLGen",
-    "HTML",
+    "HTML5 Generator",
+    "HTML5",
     "generator"
   ],
   "bugs": {
-    "url": "https://github.com/7anshuai/HTMLGen/issues"
+    "url": "https://github.com/7anshuai/html5-gen/issues"
   },
-  "homepage": "https://github.com/7anshuai/HTMLGen#readme"
+  "homepage": "https://github.com/7anshuai/html5-gen#readme"
 }
