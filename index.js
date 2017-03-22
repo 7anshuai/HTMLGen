@@ -4,10 +4,20 @@ const _ = require('underscore');
 
 class HTMLGen {
   constructor(options={}) {
+    let {title, tags} = options;
+    this._title = title || 'Default title';
 
-    this.headtags = options.headtags || '';
-    this.foottags = options.foottags || '';
-    this.title = options.title || 'Default title';
+    // initialize tags
+    this.tags = {};
+    if (tags && typeof tags === 'object') {
+      for (let tag in tags) {
+        this.tags[tag] = tags[tag] || '';
+      }
+    }
+
+    for (let tag of ['head', 'body', 'header', 'footer']) {
+      if (!this.tags[tag]) this.tags[tag] = '';
+    }
 
     // A trap for getting a property value
     // like __noSuchMethod__ in firefox
@@ -92,15 +102,18 @@ class HTMLGen {
     return decodeURIComponent(s);
   }
 
+  getTitle () {
+    return this._title;
+  }
+
   setTitle(t) {
-    this.title = t;
+    return this._title = t;
   }
 
   append (content, tag='head') {
-    let tags = tag === 'body' ? 'foottags' : 'headtags';
-    if (typeof content === 'string') return this[tags] = content;
-    if (typeof content === 'function') return this[tags] = content() ? content() : '';
-    this[tags] = this[tags] || '';
+    let tags = this.tags;
+    if (typeof content === 'string') return tags[tag] += content;
+    if (typeof content === 'function') return tags[tag] += content() ? content() : '';
   }
 
   page(content) {
@@ -109,27 +122,19 @@ class HTMLGen {
         this.html(() => {
           return this.head(() => {
             return this.meta({charset: 'utf-8'}) +
-              `<title>${this.entities(this.title)}</title>` +
+              this.title(`${this.entities(this._title)}`) +
               this.meta({content: 'width=device-width, initial-scale=1, maximum-scale=1', name: 'viewport'}) +
               this.meta({content: 'index', name: 'robots'}) +
-              this.headtags || ''
+              this.tags.head || ''
             }) +
             this.body(() => {
               return this.div({class: 'container'}, () => {
-                return _header() + this.div({id: 'content'}, typeof content === 'string' ? content : content()) + _footer();
-              }) + this.foottags;
+                return this.tags.header + this.section({id: 'content'}, typeof content === 'string' ? content : content()) + this.tags.footer;
+              }) + this.tags.body;
             })
         }) :
       '';
   }
-}
-
-function _header() {
-  return typeof applicationHeader === 'function' ? applicationHeader() : '';
-}
-
-function _footer() {
-  return typeof applicationFooter === 'function' ? applicationFooter() : '';
 }
 
 HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split('');

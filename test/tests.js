@@ -4,22 +4,24 @@ const H5 = require('../index');
 describe('HTML5 Generator', () => {
   // body...
   const h5 = new H5({
-    headtags: '<link href="/favicon.ico" rel="shortcut icon">'
+    tags: {
+      head: '<link href="/favicon.ico" rel="shortcut icon">'
+    }
   });
   const noop = () => {};
 
   it('get title', () => {
-    const title = h5.title
+    const title = h5.getTitle()
     title.should.equal('Default title');
   });
 
   it('set title', function() {
-    h5.setTitle('Test');
-    h5.title.should.equal('Test');
+    const title = h5.setTitle('Test');
+    title.should.equal('Test');
   });
 
   it('should get head tags', () => {
-    h5.headtags.should.equal('<link href="/favicon.ico" rel="shortcut icon">')
+    h5.tags.head.should.equal('<link href="/favicon.ico" rel="shortcut icon">')
   });
 
   it('should append tags to body', () => {
@@ -64,7 +66,20 @@ describe('HTML5 Generator', () => {
   });
 
   it('should gen a default page', () => {
-    const header = h5.page('');
-    header.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><div id="content"></div></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
-  })
+    const page = h5.page('');
+    page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><section id="content"></section></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
+  });
+
+  it('should gen a header', () => {
+    h5.append(h5.header(''), 'header');
+    const page = h5.page('');
+    page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><header></header><section id="content"></section></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
+  });
+
+  it('should gen a footer', () => {
+    h5.append(h5.footer(''), 'footer');
+    const page = h5.page('');
+    page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><header></header><section id="content"></section><footer></footer></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
+
+  });
 });

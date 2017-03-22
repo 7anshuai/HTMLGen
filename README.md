@@ -3,11 +3,11 @@
 [![NPM](https://nodei.co/npm/html5-gen.png?downloads=true)](https://nodei.co/npm/html5-gen/)
 
 
-I have run a site [jsernews](https://jsernews.com) with [lamernews](https://github.com/antirez/lamernews) source code for a long time.
+I have run a site [jsernews](https://jsernews.com) using [lamernews](https://github.com/antirez/lamernews) source code for a long time.
 
 I've plan to hack on jsernews with Node.js/Express/Redis/jQuery in my free time for a long time too. The goal is to have a implementation of the Lamer News style news website written using Node.js, Express, Redis and jQuery.
 
-This project was created in order to generate HTML5 tags like lamernews [HTMLGen class](https://github.com/antirez/lamernews/blob/master/page.rb) (ruby version), is free for everybody to use fork, and have fun with.
+This project was created in order to generate HTML5 tags like lamernews [HTMLGen class](https://github.com/antirez/lamernews/blob/master/page.rb) (ruby version), is free for everybody to use, fork, and have fun with.
 
 ## Installation
 
