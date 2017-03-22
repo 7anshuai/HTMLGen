@@ -1,6 +1,6 @@
 {
   "name": "html5-gen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "scripts": {
     "cover": "istanbul cover _mocha",
