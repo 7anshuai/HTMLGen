@@ -60,6 +60,11 @@ describe('HTML5 Generator', () => {
     script.should.equal('<script src="/js/app.js"></script>');
   });
 
+  it('should gen a script tag using short tags', () => {
+    const script = h5.js({src: '/js/app.js'}, '');
+    script.should.equal('<script src="/js/app.js"></script>');
+  });
+
   it('should gen a ul', () => {
     const ul = h5.list();
     ul.should.equal('<ul></ul>');

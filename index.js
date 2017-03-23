@@ -48,10 +48,10 @@ class HTMLGen {
   gentag(m, attrhash={}, content) {
     let origm, html;
     m = m.toString();
-    if (this.metatags[m]) {
+    if (this.shorttags[m]) {
       origm = m;
-      m = this.metatags[m]['tag'];
-      attrhash = Object.assign(this.metatags[origm], attrhash);
+      m = this.shorttags[m]['tag'];
+      attrhash = Object.assign(attrhash, this.shorttags[origm]);
       delete attrhash['tag'];
       if (attrhash['!append']) {
         content += attrhash['!append'];
@@ -140,17 +140,17 @@ class HTMLGen {
 
 HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split(' ');
 
-HTMLGen.prototype.metatags = {
-  'js': {'tag': 'script'},
-  'inputtext': {'tag': 'input', 'type': 'text'},
-  'inputpass': {'tag': 'input', 'type': 'password'},
-  'inputfile': {'tag': 'input', 'type': 'file'},
-  'inputhidden': {'tag': 'input', 'type': 'hidden'},
-  'button': {'tag': 'input', 'type': 'button'},
-  'submit': {'tag': 'input', 'type': 'submit'},
-  'checkbox': {'tag': 'input', 'type': 'checkbox'},
-  'radio': {'tag': 'input', 'type': 'radio'}
+HTMLGen.prototype.shorttags = {
+  'css': {tag: 'link', rel: 'stylesheet'},
+  'js': {tag: 'script'},
+  'text': {tag: 'input', type: 'text'},
+  'password': {tag: 'input', type: 'password'},
+  'file': {tag: 'input', type: 'file'},
+  'hidden': {tag: 'input', type: 'hidden'},
+  'button': {tag: 'input', type: 'button'},
+  'submit': {tag: 'input', type: 'submit'},
+  'checkbox': {tag: 'input', type: 'checkbox'},
+  'radio': {tag: 'input', type: 'radio'}
 }
-
 
 module.exports =  HTMLGen;
