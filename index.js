@@ -33,7 +33,7 @@ class HTMLGen {
           if (typeof content === 'string') {
             content = content;
           } else if (typeof content === 'function') {
-            content = content() && content().toString() ? content().toString() : '';
+            content = content() && content().toString() ? content().toString() : null;
           } else {
             content = null;
           }
@@ -61,6 +61,7 @@ class HTMLGen {
 
     let nl = this.newlinetags.includes(m) && this.pretty ? '\n' : '';
     let attribs = '';
+    let single = this.singletags.includes(m);
 
     if (Object.keys(attrhash).length != 0) {
       for (let k in attrhash) {
@@ -69,12 +70,14 @@ class HTMLGen {
       }
     }
 
-    if (content || content === '') {
+    if (single) {
+      html = `<${m}${attribs}>` + nl;
+    } else if (!single && content) {
       if (content[-1] != 10) content += nl;
       if (content[0] != 10) content = nl + content;
       html = `<${m}${attribs}>` + content + `</${m}>`;
     } else {
-      html = `<${m}${attribs}>` + nl
+      html = `<${m}${attribs}></${m}>` + nl;
     }
 
     return html;
@@ -117,7 +120,7 @@ class HTMLGen {
     if (typeof content === 'function') return tags[tag] += content() ? content() : '';
   }
 
-  page(content) {
+  page(content='') {
     return typeof content === 'string' || typeof content === 'function' ?
       '<!DOCTYPE html>' +
         this.html(() => {
@@ -139,6 +142,8 @@ class HTMLGen {
 }
 
 HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split(' ');
+
+HTMLGen.prototype.singletags = 'base meta link br hr img input'.split(' ');
 
 HTMLGen.prototype.shorttags = {
   'css': {tag: 'link', rel: 'stylesheet'},

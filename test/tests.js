@@ -26,7 +26,7 @@ describe('HTML5 Generator', () => {
 
   it('should append tags to body', () => {
     h5.append(() => {
-      return h5.script({src: '//code.jquery.com/jquery.js'}, '');
+      return h5.script({src: '//code.jquery.com/jquery.js'});
     }, 'body');
   });
 
@@ -41,17 +41,17 @@ describe('HTML5 Generator', () => {
   });
 
   it('should gen a script tag without attrhash', () => {
-    const script = h5.script('');
+    const script = h5.script();
     script.should.equal('<script></script>');
   });
 
   it('should gen a script tag with content', () => {
-    const script = h5.script('', 'var a;');
+    const script = h5.script('var a;');
     script.should.equal('<script>var a;</script>');
   });
 
   it('should gen a script tag with ""', () => {
-    const script = h5.script({src: '/js/app.js'}, '');
+    const script = h5.script({src: '/js/app.js'});
     script.should.equal('<script src="/js/app.js"></script>');
   });
 
@@ -61,7 +61,7 @@ describe('HTML5 Generator', () => {
   });
 
   it('should gen a script tag using short tags', () => {
-    const script = h5.js({src: '/js/app.js'}, '');
+    const script = h5.js({src: '/js/app.js'});
     script.should.equal('<script src="/js/app.js"></script>');
   });
 
@@ -71,19 +71,19 @@ describe('HTML5 Generator', () => {
   });
 
   it('should gen a default page', () => {
-    const page = h5.page('');
+    const page = h5.page();
     page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><section id="content"></section></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
   });
 
   it('should gen a header', () => {
-    h5.append(h5.header(''), 'header');
-    const page = h5.page('');
+    h5.append(h5.header(), 'header');
+    const page = h5.page();
     page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><header></header><section id="content"></section></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
   });
 
   it('should gen a footer', () => {
-    h5.append(h5.footer(''), 'footer');
-    const page = h5.page('');
+    h5.append(h5.footer(), 'footer');
+    const page = h5.page();
     page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><header></header><section id="content"></section><footer></footer></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
 
   });

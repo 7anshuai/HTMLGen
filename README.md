@@ -21,17 +21,20 @@ npm install html5-gen
 
 ### Node.js
 
-```
+```javascript
   const HTMLGen = require('html5-gen');
   const h5 = new HTMLGen();
 
-  h5.script({src: '/js/app.js'}, ''); // <script src="/js/app.js"></script>
-  h5.script(''); // <script></script>
+  h5.script({src: '/js/app.js'}); // <script src="/js/app.js"></script>
+  h5.script(); // <script></script>
+  h5.script('var h5;') // <script>var h5;</script>
 
-  // maybe it should be more smart
-  h5.script(); // <script> 
-  // but it works with single tags
+  // single tags
   h5.meta({charset: 'utf8'}); // <meta charset="utf-8">
+
+  // short tags
+  h5.css() // <link rel="stylesheet">
+  h5.js() // <script></script>
 
   // pass a anonymous function expression like ruby block
   h5.div({class: 'container'}, () => {
