@@ -4,8 +4,9 @@ const _ = require('underscore');
 
 class HTMLGen {
   constructor(options={}) {
-    let {title, tags} = options;
+    let {title, tags, pretty} = options;
     this._title = title || 'Default title';
+    this.pretty = pretty || false;
 
     // initialize tags
     this.tags = {};
@@ -58,7 +59,7 @@ class HTMLGen {
       }
     }
 
-    let nl = this.newlinetags.includes(m) ? '\n' : '';
+    let nl = this.newlinetags.includes(m) && this.pretty ? '\n' : '';
     let attribs = '';
 
     if (Object.keys(attrhash).length != 0) {
@@ -137,7 +138,7 @@ class HTMLGen {
   }
 }
 
-HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split('');
+HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split(' ');
 
 HTMLGen.prototype.metatags = {
   'js': {'tag': 'script'},
