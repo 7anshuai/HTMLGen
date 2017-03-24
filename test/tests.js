@@ -65,6 +65,11 @@ describe('HTML5 Generator', () => {
     script.should.equal('<script src="/js/app.js"></script>');
   });
 
+  it('should gen a link tag using short tags', () => {
+    const css = h5.css({href: '/css/style.css'});
+    css.should.equal('<link href="/css/style.css" rel="stylesheet">');
+  });
+
   it('should gen a ul', () => {
     const ul = h5.list();
     ul.should.equal('<ul></ul>');
@@ -87,4 +92,31 @@ describe('HTML5 Generator', () => {
     page.should.equal('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Test</title><meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"><meta content="index" name="robots"><link href="/favicon.ico" rel="shortcut icon"></head><body><div class="container"><header></header><section id="content"></section><footer></footer></div><script src="//code.jquery.com/jquery.js"></script></body></html>');
 
   });
+});
+
+
+describe('helper methods', () => {
+
+  const h5 = new H5();
+
+  it('should escape HTML entities', () => {
+    const result = h5.entities('<script>');
+    result.should.equal('&lt;script&gt;');
+  });
+
+  it('should unescape HTML entities', () => {
+    const result = h5.unentities('&lt;script&gt;');
+    result.should.equal('<script>');
+  });
+
+  it('should encode a url', () => {
+    const result = h5.urlencode('https://jsernews.com/');
+    result.should.equal('https%3A%2F%2Fjsernews.com%2F');
+  });
+
+  it('should decode a url', () => {
+    const result = h5.urldecode('https%3A%2F%2Fjsernews.com%2F');
+    result.should.equal('https://jsernews.com/');
+  });
+
 });
