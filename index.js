@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('underscore');
-
 class HTMLGen {
   constructor(options={}) {
     let {title, tags, pretty} = options;
@@ -91,11 +89,11 @@ class HTMLGen {
   }
 
   entities(s) {
-    return _.escape(s);
+    return escape(s);
   }
 
   unentities(s) {
-    return _.unescape(s);
+    return unescape(s);
   }
 
   urlencode(s) {
@@ -157,5 +155,44 @@ HTMLGen.prototype.shorttags = {
   'checkbox': {tag: 'input', type: 'checkbox'},
   'radio': {tag: 'input', type: 'radio'}
 }
+
+// Invert the keys and values of an object. The values must be serializable.
+function invert(obj) {
+  let result = {};
+  let keys = Object.keys(obj);
+  for (let i = 0, length = keys.length; i < length; i++) {
+    result[obj[keys[i]]] = keys[i];
+  }
+  return result;
+};
+
+// List of HTML entities for escaping.
+let escapeMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#x27;',
+  '`': '&#x60;'
+};
+let unescapeMap = invert(escapeMap);
+
+// Functions for escaping and unescaping strings to/from HTML interpolation.
+function createEscaper(map) {
+  let escaper = function(match) {
+    return map[match];
+  };
+  // Regexes for identifying a key that needs to be escaped
+  let source = '(?:' + Object.keys(map).join('|') + ')';
+  let testRegexp = RegExp(source);
+  let replaceRegexp = RegExp(source, 'g');
+  return function(string) {
+    string = string == null ? '' : '' + string;
+    return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+  };
+};
+
+let escape = createEscaper(escapeMap);
+let unescape = createEscaper(unescapeMap);
 
 module.exports =  HTMLGen;
