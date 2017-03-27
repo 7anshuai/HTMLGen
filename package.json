@@ -1,6 +1,6 @@
 {
   "name": "html5-gen",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "main": "index.js",
   "scripts": {
     "cover": "istanbul cover _mocha -- --require should",
