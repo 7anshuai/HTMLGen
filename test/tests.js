@@ -1,5 +1,4 @@
-const should = require('should');
-const H5 = require('../index');
+const H5 = typeof require == 'function' ? require('../index') : window.HTMLGen;
 
 describe('HTML5 Generator', () => {
   // body...
