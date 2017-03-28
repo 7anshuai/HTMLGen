@@ -17,30 +17,58 @@ This project was created in order to generate HTML5 tags like lamernews [HTMLGen
 npm install html5-gen
 ```
 
+### Bower
+```
+bower install html5-gen
+```
+
 ## Usage
 
 ### Node.js
 
 ```javascript
-  const HTMLGen = require('html5-gen');
+const HTMLGen = require('html5-gen');
+const h5 = new HTMLGen();
+
+h5.script({src: '/js/app.js'}); // <script src="/js/app.js"></script>
+h5.script(); // <script></script>
+h5.script('var h5;') // <script>var h5;</script>
+
+// single tags
+h5.meta({charset: 'utf8'}); // <meta charset="utf-8">
+
+// short tags
+h5.css() // <link rel="stylesheet">
+h5.js() // <script></script>
+
+// pass a anonymous function expression like ruby block
+h5.div({class: 'container'}, () => {
+  // do something and return html...
+  return h5.span('Hello World!');
+}); // <div class="container"><span>Hello World!</span></div>
+```
+
+### Browser
+
+```javascript
+<script src="bower_components/html5-gen/index.js"></script>
+<script>
   const h5 = new HTMLGen();
 
   h5.script({src: '/js/app.js'}); // <script src="/js/app.js"></script>
   h5.script(); // <script></script>
-  h5.script('var h5;') // <script>var h5;</script>
 
-  // single tags
-  h5.meta({charset: 'utf8'}); // <meta charset="utf-8">
+</script>
+```
 
-  // short tags
-  h5.css() // <link rel="stylesheet">
-  h5.js() // <script></script>
+With Require.js:
+```javascript
+require(["bower_components/html5-gen/index"], function (HTMLGen){
+  const h5 = new HTMLGen();
 
-  // pass a anonymous function expression like ruby block
-  h5.div({class: 'container'}, () => {
-    // do something and return html...
-    return h5.span('Hello World!');
-  }); // <div class="container"><span>Hello World!</span></div>
+  h5.script({src: '/js/app.js'}); // <script src="/js/app.js"></script>
+  h5.script(); // <script></script>
+});
 ```
 
 ## Testing

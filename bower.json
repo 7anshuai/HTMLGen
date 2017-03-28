@@ -1,0 +1,23 @@
+{
+  "name": "html5-gen",
+  "description": "HTML5 Generator",
+  "main": "index.js",
+  "authors": [
+    "Tan Shuai"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "HTML5",
+    "Generator",
+    "HTML5",
+    "generator"
+  ],
+  "homepage": "https://github.com/7anshuai/html5-gen",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
