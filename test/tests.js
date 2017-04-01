@@ -1,3 +1,4 @@
+const should = typeof require == 'function' ? require('should') : window.should;
 const H5 = typeof require == 'function' ? require('../index') : window.HTMLGen;
 
 describe('HTML5 Generator', () => {

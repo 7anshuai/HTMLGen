@@ -1,4 +1,9 @@
 language: node_js
 node_js:
-  - "stable"
+  - "node"
+  - "7"
   - "6"
+script:
+  - npm test
+  - npm run test-browser
+after_success: npm run cover
