@@ -64,18 +64,19 @@
 
       let nl = this.newlinetags.includes(m) && this.pretty ? '\n' : '';
       let attribs = '';
-      let single = this.singletags.includes(m);
+      let singletag = this.singletags.includes(m);
 
       if (Object.keys(attrhash).length != 0) {
         for (let k in attrhash) {
+          let singleattr = this.singleattribs.includes(k);
           let v = attrhash[k];
-          if (v) attribs += ` ${k}="${this.entities(v.toString())}"`;
+          if (v) attribs += singleattr ? ` ${k}` : ` ${k}="${this.entities(v.toString())}"`;
         }
       }
 
-      if (single) {
+      if (singletag) {
         html = `<${m}${attribs}>` + nl;
-      } else if (!single && content) {
+      } else if (!singletag && content) {
         if (content[-1] != 10) content += nl;
         if (content[0] != 10) content = nl + content;
         html = `<${m}${attribs}>` + content + `</${m}>`;
@@ -146,6 +147,7 @@
   HTMLGen.prototype.newlinetags = 'html body div br ul hr title link head fieldset label legend option table li select td tr meta'.split(' ');
 
   HTMLGen.prototype.singletags = 'base meta link br hr img input'.split(' ');
+  HTMLGen.prototype.singleattribs = 'async defer novalidate required'.split(' ');
 
   HTMLGen.prototype.shorttags = {
     'css': {tag: 'link', rel: 'stylesheet'},

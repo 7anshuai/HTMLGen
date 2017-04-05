@@ -40,7 +40,17 @@ describe('HTML5 Generator', () => {
     meta.should.equal('<meta charset="utf-8">');
   });
 
-  it('should gen a script tag without attrhash', () => {
+  it('should gen a script tag with a empty attrhash', () => {
+    const script = h5.script({});
+    script.should.equal('<script></script>');
+  });
+
+  it('should gen a script tag with a single attrhash', () => {
+    const script = h5.script({async: true, src: '/js/app.js'});
+    script.should.equal('<script async src="/js/app.js"></script>');
+  });
+
+  it('should gen a script tag without arguments', () => {
     const script = h5.script();
     script.should.equal('<script></script>');
   });
@@ -50,8 +60,8 @@ describe('HTML5 Generator', () => {
     script.should.equal('<script>var a;</script>');
   });
 
-  it('should gen a script tag with ""', () => {
-    const script = h5.script({src: '/js/app.js'});
+  it('should gen a script tag with a empty str', () => {
+    const script = h5.script({src: '/js/app.js'}, '');
     script.should.equal('<script src="/js/app.js"></script>');
   });
 
