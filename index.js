@@ -28,7 +28,7 @@
       // like method_missing in ruby
       const handler = {
         get (target, key) {
-          return key in target ? target[key] : function methodMissing(attrhash, content) {
+          return Reflect.has(target, key) ? Reflect.get(target, key) : function methodMissing(attrhash, content) {
             if (typeof attrhash === 'string' || typeof attrhash === 'function') {
               content = content ? content : attrhash;
               attrhash = {};
