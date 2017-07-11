@@ -9,12 +9,12 @@ This project was created in order to generate HTML5 tags like lamernews [HTMLGen
 ### NPM
 
 ```
-npm install html5-gen
+$ npm install html5-gen
 ```
 
 ### Bower
 ```
-bower install html5-gen
+$ bower install html5-gen
 ```
 
 ## Usage
@@ -69,7 +69,7 @@ require(["bower_components/html5-gen/index"], function (HTMLGen){
 ## Testing
 
 ```
-npm test
+$ npm test
 ```
 
 ## License
